@@ -16,7 +16,7 @@
         <selenium.java.version>3.141.59</selenium.java.version>
         <junit.version>5.10.0</junit.version>
         <surefire.plugin.version>3.1.2</surefire.plugin.version>
-        <base.url></base.url>
+        <base.url>https://otus.ru</base.url>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <spotbugs.maven.plugin.version>4.7.3.5</spotbugs.maven.plugin.version>
         <maven.checkstyle.plugin.version>3.3.0</maven.checkstyle.plugin.version>
@@ -33,11 +33,6 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium.java.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.seleniumhq.selenium</groupId>-->
-<!--            <artifactId>selenium-support</artifactId>-->
-<!--            <version>${selenium.java.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
@@ -49,7 +44,7 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
-            <scope>test</scope>
+<!--            <scope>test</scope>-->
         </dependency>
     </dependencies>
 
@@ -76,9 +71,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
                 <configuration>
-                    <systemProperties>
+                    <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
-                    </systemProperties>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>

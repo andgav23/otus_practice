@@ -1,6 +1,8 @@
 package org.example.factory.impl;
 
+import org.openqa.selenium.MutableCapabilities;
+
 public interface IBrowserSettings {
 
-    void configureDriver();
+  MutableCapabilities configureDriver();
 }
