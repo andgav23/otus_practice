@@ -1,0 +1,1 @@
+ctrl+ctrl mvn clean test -Dbrowser=chrome

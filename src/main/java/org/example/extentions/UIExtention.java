@@ -1,20 +1,23 @@
 package org.example.extentions;
 
 import org.example.annotations.Driver;
-import org.example.factory.FactoryWebDriver;
+import org.example.factory.WebDriverFactory;
+import org.example.listeners.MouseListener;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UIExtention implements BeforeEachCallback, AfterEachCallback {
-  private WebDriver driver;
+  private EventFiringWebDriver driver = null;
   private static final Logger LOGGER = LoggerFactory.getLogger(UIExtention.class);
 
   private List<Field> getAnnotatedFields(Class<? extends Annotation> annotaion, ExtensionContext extensionContext) {
@@ -33,8 +36,8 @@ public class UIExtention implements BeforeEachCallback, AfterEachCallback {
 
   @Override
   public void beforeEach(ExtensionContext extensionContext) throws Exception {
-    // TODO добавить обертку 31/24 минута до конца первой практики
-    driver = new FactoryWebDriver().create();
+    driver = new WebDriverFactory().create();
+    driver.register(new MouseListener());
     List<Field> fields = getAnnotatedFields(Driver.class, extensionContext);
 
     for (Field field : fields) {
@@ -43,7 +46,7 @@ public class UIExtention implements BeforeEachCallback, AfterEachCallback {
           field.setAccessible(true);
           field.set(extensionContext.getTestInstance().get(), driver);
         } catch (IllegalAccessException e) {
-          throw new Error(String.format("Could not access or set webdriver in field: %s - is this field public?", field.getName()));
+          throw new Error(String.format("Could not access or set webdriver in field: %s", field.getName()));
         }
       }
     }
@@ -51,7 +54,7 @@ public class UIExtention implements BeforeEachCallback, AfterEachCallback {
 
 
   @Override
-  public void afterEach(ExtensionContext extensionContext) throws Exception {
+  public void afterEach(ExtensionContext extensionContext) {
     if (driver != null) {
       driver.close();
       LOGGER.info("Driver closed");
