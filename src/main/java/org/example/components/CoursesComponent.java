@@ -18,8 +18,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-
-//@WebComponent("//*[@id=\"__next\"]/div[1]/main/div")
 @WebComponent("//*[@id=\"__next\"]/div[1]/main/div/div/div/div[1]/a/div/div/div")
 public class CoursesComponent extends AbsComponent<CoursesComponent> {
   @FindBy(xpath = "//*[@id='__next']/*/main/div/*/div/*")
@@ -33,16 +31,26 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
     return courses.stream().map(cource -> getWebElementText(cource, ".//h5")).collect(Collectors.toList());
   }
 
-  public void getCoursesMap() {
+  public Map<WebElement, LocalDate> getCoursesMap() {
     Map<WebElement, LocalDate> coursesMap = new HashMap<>();
     System.out.println(courses.size());
     for (WebElement course : courses) {
       try {
-        System.out.println(getCourseStartDate(course));
+        coursesMap.put(course, getCourseStartDate(course));
       } catch (ParseException e) {
         throw new RuntimeException(e);
       }
     }
+    return coursesMap;
+  }
+
+  public WebElement getMaxStartDateCourse(Map<WebElement, LocalDate> courseMap) {
+    LocalDate max = Collections.max(courseMap.values());
+    System.out.println(max);
+    return courseMap.entrySet().stream()
+        .filter(course -> course.getValue() == max)
+        .map(course -> course.getKey())
+        .toList().get(0);
   }
 
   public LocalDate getCourseStartDate(WebElement webElement) throws ParseException {
@@ -50,18 +58,17 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
         "\\d{1,2}\\s*(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)";
     String datePatternWithYear = datePatternWithoutYear + "\\s*\\d{4}";
     String localDateFormat = "d MMMM yyyy";
-    String webElementCourseElement = getWebElementText(webElement, ".//a/div/div/div/div/span");
-    if (webElementCourseElement.startsWith("С ")) {
-      String extractedDate = extractDate(webElementCourseElement, datePatternWithYear);
+    String webElementCourseElement = getWebElementText(webElement, ".//a/div/div/div/div/span[starts-with(text(),\"С \")]");
 
-      if (extractedDate == null) {
-        extractedDate = extractDate(webElementCourseElement, datePatternWithoutYear);
-        return localDateMapper(extractedDate + " " + LocalDate.now().getYear(), localDateFormat);
-      }
-      return
-          localDateMapper(extractedDate, localDateFormat);
+    String extractedDate = extractDate(webElementCourseElement, datePatternWithYear);
+
+    if (extractedDate == null) {
+      extractedDate = extractDate(webElementCourseElement, datePatternWithoutYear);
+      return localDateMapper(extractedDate + " " + LocalDate.now().getYear(), localDateFormat);
     }
-    return null;
+    return
+        localDateMapper(extractedDate, localDateFormat);
+
   }
 
   private String extractDate(String webElementDate, String strPattern) throws ParseException {
@@ -87,10 +94,11 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
       throw new ChildElementNotFoundException(el.getAttribute("class"), courseTitleXPath);
     }
   }
-  //  public void clickCoursesItem() {
-  //    courses.get(0).click();
-  //
-  //  }
+
+  public void clickCoursesItem(WebElement courses) {
+    courses.click();
+
+  }
 
 }
 
