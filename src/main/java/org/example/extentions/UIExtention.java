@@ -1,7 +1,7 @@
 package org.example.extentions;
 
 import org.example.annotations.Driver;
-import org.example.factory.WebDriverFactory;
+import org.example.factory.impl.WebDriverFactory;
 import org.example.listeners.MouseListener;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -10,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;

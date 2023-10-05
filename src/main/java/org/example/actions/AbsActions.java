@@ -23,7 +23,7 @@ public abstract class AbsActions<T> {
   protected BiConsumer<By, Predicate<? super WebElement>> clickElementByPredicate = (By locator, Predicate<? super WebElement> predicate) -> {
     List<WebElement> elements = driver.findElements(locator).stream().filter(predicate).toList();
 
-    if(!elements.isEmpty()) {
+    if (!elements.isEmpty()) {
       elements.get(0).click();
     }
   };

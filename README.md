@@ -1,1 +1,3 @@
-ctrl+ctrl mvn clean test -Dbrowser=chrome
+# Запуск тестов
+ветка main, команда:
+mvn clean test

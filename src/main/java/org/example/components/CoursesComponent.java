@@ -2,15 +2,12 @@ package org.example.components;
 
 import org.example.annotations.WebComponent;
 import org.example.exceptions.ChildElementNotFoundException;
-import org.example.extentions.UIExtention;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -33,7 +30,6 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
 
   public Map<WebElement, LocalDate> getCoursesMap() {
     Map<WebElement, LocalDate> coursesMap = new HashMap<>();
-    System.out.println(courses.size());
     for (WebElement course : courses) {
       try {
         coursesMap.put(course, getCourseStartDate(course));
@@ -46,7 +42,6 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
 
   public WebElement getMaxStartDateCourse(Map<WebElement, LocalDate> courseMap) {
     LocalDate max = Collections.max(courseMap.values());
-    System.out.println(max);
     return courseMap.entrySet().stream()
         .filter(course -> course.getValue() == max)
         .map(course -> course.getKey())

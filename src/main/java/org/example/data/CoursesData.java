@@ -1,7 +1,7 @@
 package org.example.data;
 
 public enum CoursesData {
-  SYSTEM_ANALISYS("Специализация Системный аналитик");
+  SYSTEM_ANALYSIS("Специализация Системный аналитик");
 
   private final String name;
 

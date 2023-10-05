@@ -6,17 +6,19 @@ import org.example.driver.IDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaOptions;
 
-public class ChromeWebDriver implements IDriver {
+public class OperaWebDriver implements IDriver {
   @Override
   public WebDriver newDriver(){
 
-    ChromeOptions chromeOptions = new ChromeOptions();
-    chromeOptions.addArguments("--start-fullscreen");
-    chromeOptions.addArguments("--enable-extensions");
-    chromeOptions.addArguments("homepage=about:blank");
-    downloadLocalWebDriver(DriverManagerType.CHROME);
-    return new ChromeDriver(chromeOptions);
+    OperaOptions operaOptions = new OperaOptions();
+    operaOptions.addArguments("--start-fullscreen");
+    operaOptions.addArguments("--enable-extensions");
+    operaOptions.addArguments("homepage=about:blank");
+    downloadLocalWebDriver(DriverManagerType.OPERA);
+    return new OperaDriver(operaOptions);
 
   }
 
