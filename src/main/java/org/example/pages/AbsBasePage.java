@@ -1,14 +1,14 @@
 package org.example.pages;
 
+import org.example.actions.AbsActions;
 import org.example.annotations.Path;
 import org.example.annotations.Template;
 import org.example.annotations.UrlTemplate;
 import org.example.exceptions.PathException;
-import org.example.pageobject.AbsPageObject;
 import org.openqa.selenium.WebDriver;
 import java.util.Arrays;
 
-public abstract class AbsBasePage<T> extends AbsPageObject {
+public abstract class AbsBasePage<T> extends AbsActions {
 
   private final static String BASE_URL = System.getProperty("base.url");
 

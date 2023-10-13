@@ -12,6 +12,11 @@ public abstract class AbsComponent<T> extends AbsActions {
     this.standartWaiter.waitForCondition(ExpectedConditions.visibilityOfElementLocated(getComponentLocator()));
   }
   protected String baseLocator;
+
+  public Actions getActions() {
+    return actions;
+  }
+
   protected Actions actions;
 
 

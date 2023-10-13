@@ -1,6 +1,7 @@
 package org.example.components;
 
 import org.example.annotations.WebComponent;
+import org.example.data.SearchFlagsData;
 import org.example.exceptions.ChildElementNotFoundException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -25,7 +26,7 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
   }
 
   public List<String> getCourseTitles() {
-    return courses.stream().map(cource -> getWebElementText(cource, ".//h5")).collect(Collectors.toList());
+    return courses.stream().map(course -> getWebElementText(course, ".//h5")).collect(Collectors.toList());
   }
 
   public Map<WebElement, LocalDate> getCoursesMap() {
@@ -40,12 +41,31 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
     return coursesMap;
   }
 
-  public WebElement getMaxStartDateCourse(Map<WebElement, LocalDate> courseMap) {
-    LocalDate max = Collections.max(courseMap.values());
+  public WebElement getCourseByStartDate(Map<WebElement, LocalDate> courseMap, SearchFlagsData searchFlag) {
+
+    LocalDate courseStartDate = courseMap
+        .values()
+        .stream()
+        .reduce((firstDate, lastDate) -> getComparedDates(firstDate, lastDate, searchFlag)).get();
+
     return courseMap.entrySet().stream()
-        .filter(course -> course.getValue() == max)
-        .map(course -> course.getKey())
-        .toList().get(0);
+        .filter(course -> courseStartDate.equals(course.getValue()))
+        .findFirst().map(Map.Entry::getKey).get();
+
+  }
+
+  private LocalDate getComparedDates(LocalDate firstDate, LocalDate secondDate, SearchFlagsData searchFlags) {
+    switch (searchFlags) {
+      case LATEST -> {
+        return (firstDate.isAfter(secondDate) ? firstDate : secondDate);
+      }
+      case EARLIEST -> {
+        return (firstDate.isBefore(secondDate) ? firstDate : secondDate);
+      }
+      default -> {
+        throw new IllegalArgumentException();
+      }
+    }
   }
 
   public LocalDate getCourseStartDate(WebElement webElement) throws ParseException {
