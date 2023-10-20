@@ -3,6 +3,7 @@ package org.example.components;
 import org.example.annotations.WebComponent;
 import org.example.data.SearchFlagsData;
 import org.example.exceptions.ChildElementNotFoundException;
+import org.example.pages.CoursePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 
 @WebComponent("//*[@id=\"__next\"]/div[1]/main/div/div/div/div[1]/a/div/div/div")
 public class CoursesComponent extends AbsComponent<CoursesComponent> {
@@ -110,10 +112,12 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
     }
   }
 
-  public void clickCoursesItem(WebElement courses) {
+  public CoursePage clickCoursesItem(WebElement courses) {
     courses.click();
-
+    return new CoursePage(driver);
   }
+
+
 
 }
 
