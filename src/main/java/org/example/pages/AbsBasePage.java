@@ -1,9 +1,12 @@
 package org.example.pages;
 
+import com.google.inject.Guice;
+import com.google.inject.Inject;
 import org.example.actions.AbsActions;
 import org.example.annotations.Path;
 import org.example.annotations.Template;
 import org.example.annotations.UrlTemplate;
+import org.example.di.GuiceScoped;
 import org.example.exceptions.PathException;
 import org.openqa.selenium.WebDriver;
 import java.util.Arrays;
@@ -12,9 +15,9 @@ public abstract class AbsBasePage<T> extends AbsActions {
 
   private final static String BASE_URL = System.getProperty("base.url");
 
-
-  public AbsBasePage(WebDriver driver) {
-    super(driver);
+@Inject
+  public AbsBasePage(GuiceScoped guiceScoped) {
+    super(guiceScoped);
   }
 
   private String getPath(String name, String... data) {

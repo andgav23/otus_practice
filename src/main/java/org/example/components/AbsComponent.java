@@ -1,7 +1,9 @@
 package org.example.components;
 
+import com.google.inject.Inject;
 import org.example.actions.AbsActions;
 import org.example.annotations.WebComponent;
+import org.example.di.GuiceScoped;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -19,9 +21,9 @@ public abstract class AbsComponent<T> extends AbsActions {
 
   protected Actions actions;
 
-
-  public AbsComponent(WebDriver driver) {
-    super(driver);
+@Inject
+  public AbsComponent(GuiceScoped guiceScoped) {
+    super(guiceScoped);
     actions = new Actions(driver);
   }
 

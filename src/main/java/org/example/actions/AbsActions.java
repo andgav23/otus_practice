@@ -2,6 +2,8 @@ package org.example.actions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.google.inject.Inject;
+import org.example.di.GuiceScoped;
 import org.example.waiters.StandartWaiter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,12 +21,14 @@ public abstract class AbsActions<T> {
   protected WebDriver driver;
   protected StandartWaiter standartWaiter;
   protected Actions actions;
+  protected GuiceScoped guiceScoped;
 
   @FindBy(tagName = "h1")
   protected WebElement title;
-
-  public AbsActions(WebDriver driver) {
-    this.driver = driver;
+@Inject
+  public AbsActions(GuiceScoped guiceScoped) {
+  this.guiceScoped = guiceScoped;
+    this.driver = guiceScoped.driver;
     this.actions = new Actions(driver);
     PageFactory.initElements(driver, this);
     standartWaiter = new StandartWaiter(driver);

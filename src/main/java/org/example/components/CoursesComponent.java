@@ -1,7 +1,9 @@
 package org.example.components;
 
+import com.google.inject.Inject;
 import org.example.annotations.WebComponent;
 import org.example.data.SearchFlagsData;
+import org.example.di.GuiceScoped;
 import org.example.exceptions.ChildElementNotFoundException;
 import org.example.pages.CoursePage;
 import org.openqa.selenium.By;
@@ -22,9 +24,9 @@ import java.util.stream.Collectors;
 public class CoursesComponent extends AbsComponent<CoursesComponent> {
   @FindBy(xpath = "//*[@id='__next']/*/main/div/*/div/*")
   private List<WebElement> courses;
-
-  public CoursesComponent(WebDriver driver) {
-    super(driver);
+@Inject
+  public CoursesComponent(GuiceScoped guiceScoped) {
+    super(guiceScoped);
   }
 
   public List<String> getCourseTitles() {
@@ -114,7 +116,7 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
 
   public CoursePage clickCoursesItem(WebElement courses) {
     courses.click();
-    return new CoursePage(driver);
+    return new CoursePage(guiceScoped);
   }
 
 
