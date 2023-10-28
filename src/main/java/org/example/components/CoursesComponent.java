@@ -33,6 +33,9 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
     return courses.stream().map(course -> getWebElementText(course, ".//h5")).collect(Collectors.toList());
   }
 
+  public WebElement findCoursesByName(String courseName){
+    return courses.stream().filter(course -> getWebElementText(course, ".//h5").equals(courseName)).findFirst().get();
+  }
   public Map<WebElement, LocalDate> getCoursesMap() {
     Map<WebElement, LocalDate> coursesMap = new HashMap<>();
     for (WebElement course : courses) {
