@@ -15,6 +15,7 @@ public class ChromeWebDriver implements IDriver {
     chromeOptions.addArguments("--start-fullscreen");
     chromeOptions.addArguments("--enable-extensions");
     chromeOptions.addArguments("homepage=about:blank");
+    chromeOptions.addArguments("--start-maximized");
     downloadLocalWebDriver(DriverManagerType.CHROME);
     return new ChromeDriver(chromeOptions);
 
