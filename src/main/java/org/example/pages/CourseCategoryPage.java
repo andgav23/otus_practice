@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.io.IOException;
-import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -23,13 +23,22 @@ public class CourseCategoryPage extends AbsBasePage<CourseCategoryPage> {
   @FindBy(xpath = "//h1")
   private WebElement title;
 
+private static int coursesCount;
+private static int priceCount;
+
 
   public void pageTitleShouldBeSameAs(String expectedTitle) {
     assertTrue(standartWaiter.waitForElementVisible(title), String.format("Title %s should be visible", expectedTitle));
     assertTrue(expectedTitle.contains(title.getText()), String.format("Title should be %s", expectedTitle));
   }
 
-  public void findCourse() throws IOException {
-    catalogComponent.courses();
+  public void comparePrice() throws IOException {
+    coursesCount = catalogComponent.printCoursesWithMaxAndMinPrice();
+    priceCount = catalogComponent.getCourses().size();
+
+  }
+
+  public void coursesCountShouldBeEqualsPricesCount() {
+    assertEquals(coursesCount, priceCount);
   }
 }

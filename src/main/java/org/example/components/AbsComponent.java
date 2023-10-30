@@ -5,7 +5,6 @@ import org.example.actions.AbsActions;
 import org.example.annotations.WebComponent;
 import org.example.di.GuiceScoped;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -13,6 +12,7 @@ public abstract class AbsComponent<T> extends AbsActions {
   {
     this.standartWaiter.waitForCondition(ExpectedConditions.visibilityOfElementLocated(getComponentLocator()));
   }
+
   protected String baseLocator;
 
   public Actions getActions() {
@@ -21,7 +21,7 @@ public abstract class AbsComponent<T> extends AbsActions {
 
   protected Actions actions;
 
-@Inject
+  @Inject
   public AbsComponent(GuiceScoped guiceScoped) {
     super(guiceScoped);
     actions = new Actions(driver);
@@ -35,7 +35,7 @@ public abstract class AbsComponent<T> extends AbsActions {
 
       baseLocator = value;
 
-      if(value.startsWith("/")) {
+      if (value.startsWith("/")) {
         return By.xpath(value);
       }
       return By.cssSelector(value);

@@ -1,7 +1,5 @@
 package org.example.actions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.google.inject.Inject;
 import org.example.di.GuiceScoped;
 import org.example.waiters.StandartWaiter;
@@ -25,9 +23,10 @@ public abstract class AbsActions<T> {
 
   @FindBy(tagName = "h1")
   protected WebElement title;
-@Inject
+
+  @Inject
   public AbsActions(GuiceScoped guiceScoped) {
-  this.guiceScoped = guiceScoped;
+    this.guiceScoped = guiceScoped;
     this.driver = guiceScoped.driver;
     this.actions = new Actions(driver);
     PageFactory.initElements(driver, this);
@@ -41,7 +40,6 @@ public abstract class AbsActions<T> {
       elements.get(0).click();
     }
   };
-
 
 
 }

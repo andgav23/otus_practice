@@ -12,7 +12,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @Path("/")
@@ -51,7 +52,7 @@ public class MainPage extends AbsBasePage<MainPage> {
     LocalDate startDate = LocalDate.parse(strStartDate, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     LocalDate minStartDate = Collections.min(checkedCourses.values());
 
-    assertTrue(String.format("Course start date should be equals or greather %s", startDate),minStartDate.compareTo(startDate) >= 0);
+    assertTrue(minStartDate.compareTo(startDate) >= 0, String.format("Course start date should be equals or greather %s", startDate));
   }
 
 

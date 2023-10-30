@@ -1,41 +1,33 @@
 package org.example.components;
 
+import static org.example.config.SSLConfiguration.getSslContext;
+
 import com.google.inject.Inject;
-import org.example.annotations.WebComponent;
-import org.example.data.SearchFlagsData;
 import org.example.di.GuiceScoped;
-import org.example.exceptions.ChildElementNotFoundException;
-import org.example.pages.CoursePage;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import us.codecraft.xsoup.Xsoup;
-
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static org.example.config.SSLConfiguration.getSslContext;
-
 
 public class CatalogComponent extends AbsComponent<CatalogComponent> {
+
+  public List<WebElement> getCourses() {
+    return courses;
+  }
 
   @FindBy(xpath = "//div/section[2]/div[2]//a[contains(@href, '/lessons/')]")
   private List<WebElement> courses;
@@ -45,50 +37,88 @@ public class CatalogComponent extends AbsComponent<CatalogComponent> {
     super(guiceScoped);
   }
 
-  public void courses() throws IOException {
-    courses.stream().forEach(course-> {
-      System.out.println(course.getAttribute("href"));
+  public int printCoursesWithMaxAndMinPrice() throws IOException {
+    List<String> coursesLinks = courses.stream()
+        .map(course -> course.getAttribute("href"))
+        .toList();
+    var coursesMap = getCourseWithPriceMap(getPageDocument(coursesLinks));
+    printCourses(getCourseByPrice(coursesMap, "min"), getCourseByPrice(coursesMap, "max"));
+    return coursesMap.size();
+  }
+
+  private void printCourses(Map.Entry<String, Double> minPriceCourse, Map.Entry<String, Double> maxPriceCourse) {
+    System.out.printf(
+        "Минимальную стоимость %s руб. имеет курс %s%n", minPriceCourse.getValue(), minPriceCourse.getKey());
+    System.out.printf(
+        "Максимальную стоимость %s руб. имеет курс %s%n", maxPriceCourse.getValue(), maxPriceCourse.getKey());
+  }
+
+  private Map.Entry<String, Double> getCourseByPrice(Map<String, Double> coursesMap, String criteria) {
+    switch (criteria) {
+      case "max":
+        return coursesMap.entrySet().stream().filter(course -> course.getValue() == Collections.max(coursesMap.values()))
+            .findFirst().get();
+
+      case "min":
+        return coursesMap.entrySet().stream().filter(course -> course.getValue() == Collections.min(coursesMap.values()))
+            .findFirst().get();
+      default:
+        throw new IllegalArgumentException();
+    }
+  }
+
+  private Map<String, Double> getCourseWithPriceMap(List<Document> pageDocuments) {
+    return pageDocuments.stream()
+        .collect(Collectors.toMap(
+            document -> findTitleElement(document).text(),
+            document -> extractPriceFromString(findPriceElement(document).text())));
+  }
+
+  private List<Document> getPageDocument(List<String> coursesLinks) {
+    SSLContext sslContext = null;
+    try {
+      sslContext = getSslContext();
+    } catch (KeyManagementException | NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
+    }
+    SSLContext finalSslContext = sslContext;
+    return coursesLinks.stream().map(link -> {
       try {
-        getPrice(course.getAttribute("href"));
-      } catch (NoSuchAlgorithmException e) {
-        throw new RuntimeException(e);
-      } catch (KeyManagementException | IOException e) {
+        return getConnectionFromLink(link, finalSslContext).get();
+      } catch (IOException e) {
         throw new RuntimeException(e);
       }
-    });
+    }).collect(Collectors.toList());
+
 
   }
 
-  private void getPrice(String courseLink) throws NoSuchAlgorithmException, KeyManagementException, IOException {
-    SSLContext sslContext = getSslContext();
-    Connection connection = Jsoup.connect(courseLink)
+  private Connection getConnectionFromLink(String link, SSLContext sslContext) {
+    return Jsoup.connect(link)
         .sslSocketFactory(sslContext.getSocketFactory())
         .timeout(5000)
         .method(Connection.Method.GET);
-
-    //Document doc = Jsoup.connect(coursLink).timeout(10000).get();
- Element element = connection.get().getElementsMatchingOwnText("Стоимость в рассрочку").next().get(0).child(0);
-    System.out.println(Double.parseDouble(extractIntegers(element.text())));
-//.select("p:contains()+div")
-
   }
 
-  public static String extractIntegers(String input) {
+  private Element findPriceElement(Document document) {
+    return document.getElementsMatchingOwnText("Стоимость в рассрочку").next().get(0).child(0);
+  }
+
+  private Element findTitleElement(Document document) {
+    return document.select("h1").get(0);
+  }
+
+
+  private Double extractPriceFromString(String input) {
+
     Pattern pattern = Pattern.compile("\\d+");
     Matcher matcher = pattern.matcher(input);
-
     List<String> numberStrings = new ArrayList<>();
     while (matcher.find()) {
       numberStrings.add(matcher.group());
     }
-
-
-
-    return String.join("", numberStrings);
+    return Double.parseDouble(String.join("", numberStrings));
   }
-
-
-
 
 
 }

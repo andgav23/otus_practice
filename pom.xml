@@ -91,16 +91,16 @@
             <version>1.16.2</version>
         </dependency>
 <!--        Test console out-->
-        <dependency>
-            <groupId>com.github.stefanbirkner</groupId>
-            <artifactId>system-rules</artifactId>
-            <version>1.17.1</version>
-        </dependency>
-        <dependency>
-            <groupId>us.codecraft</groupId>
-            <artifactId>xsoup</artifactId>
-            <version>0.3.7</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.stefanbirkner</groupId>-->
+<!--            <artifactId>system-rules</artifactId>-->
+<!--            <version>1.17.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>us.codecraft</groupId>-->
+<!--            <artifactId>xsoup</artifactId>-->
+<!--            <version>0.3.7</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <profiles>
