@@ -1,20 +1,17 @@
 package org.example.pages;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.google.inject.Inject;
 import org.example.annotations.Path;
 import org.example.components.CoursesComponent;
 import org.example.di.GuiceScoped;
 import org.openqa.selenium.WebElement;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 @Path("/")
 public class MainPage extends AbsBasePage<MainPage> {

@@ -4,17 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.inject.Inject;
 import org.example.di.GuiceScoped;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
 public class CoursePage extends AbsBasePage<CoursePage> {
-@Inject
+  @Inject
   public CoursePage(GuiceScoped guiceScoped) {
     super(guiceScoped);
   }
+
   @FindBy(xpath = "//h1")
   private WebElement title;
 

@@ -1,21 +1,21 @@
 package org.example.pages;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.google.inject.Inject;
 import org.example.components.CatalogComponent;
 import org.example.di.GuiceScoped;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class CourseCategoryPage extends AbsBasePage<CourseCategoryPage> {
   @Inject
   private CatalogComponent catalogComponent;
-@Inject
+
+  @Inject
   public CourseCategoryPage(GuiceScoped guiceScoped) {
     super(guiceScoped);
   }
@@ -23,8 +23,8 @@ public class CourseCategoryPage extends AbsBasePage<CourseCategoryPage> {
   @FindBy(xpath = "//h1")
   private WebElement title;
 
-private static int coursesCount;
-private static int priceCount;
+  private static int coursesCount;
+  private static int priceCount;
 
 
   public void pageTitleShouldBeSameAs(String expectedTitle) {

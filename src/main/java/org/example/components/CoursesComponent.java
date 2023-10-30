@@ -63,34 +63,13 @@ public class CoursesComponent extends AbsComponent<CoursesComponent> {
     courses.entrySet().stream()
         .sorted(Map.Entry.comparingByValue())
         .forEach(course ->
-            System.out.println(String.format("Курс %s, дата начала %s"
-                , getWebElementText(course.getKey(), ".//h5")
-                , course.getValue())));
+            System.out.println(String.format("Курс %s, дата начала %s",
+                getWebElementText(course.getKey(), ".//h5"),
+                course.getValue())));
 
 
   }
 
-  public WebElement getCourseByStartDate(Map<WebElement, LocalDate> courseMap, SearchFlagsData searchFlag) {
-
-    LocalDate courseStartDate = courseMap.values().stream().reduce((firstDate, lastDate) -> getComparedDates(firstDate, lastDate, searchFlag)).get();
-
-    return courseMap.entrySet().stream().filter(course -> courseStartDate.equals(course.getValue())).findFirst().map(Map.Entry::getKey).get();
-
-  }
-
-  private LocalDate getComparedDates(LocalDate firstDate, LocalDate secondDate, SearchFlagsData searchFlags) {
-    switch (searchFlags) {
-      case LATEST -> {
-        return (firstDate.isAfter(secondDate) ? firstDate : secondDate);
-      }
-      case EARLIEST -> {
-        return (firstDate.isBefore(secondDate) ? firstDate : secondDate);
-      }
-      default -> {
-        throw new IllegalArgumentException();
-      }
-    }
-  }
 
   public LocalDate getCourseStartDate(WebElement webElement) throws ParseException {
     String datePatternWithoutYear = "\\d{1,2}\\s*(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)";
