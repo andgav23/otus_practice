@@ -12,29 +12,32 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <webdriver.manager.version>5.5.3</webdriver.manager.version>
-        <selenium.java.version>3.141.59</selenium.java.version>
         <junit.version>5.10.0</junit.version>
         <surefire.plugin.version>3.1.2</surefire.plugin.version>
-        <base.url>https://otus.ru</base.url>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <spotbugs.maven.plugin.version>4.7.3.5</spotbugs.maven.plugin.version>
         <maven.checkstyle.plugin.version>3.3.0</maven.checkstyle.plugin.version>
         <slf4j.simple.version>2.0.9</slf4j.simple.version>
         <assertj.version>3.24.2</assertj.version>
+        <rest.assured.version> 5.3.2</rest.assured.version>
+        <lombok.version>1.18.30</lombok.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>${webdriver.manager.version}</version>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest.assured.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.java.version}</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
+
+
         <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
@@ -61,21 +64,6 @@
 
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <base.url>https://otus.ru</base.url>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <base.url>https://test.otus.ru</base.url>
-            </properties>
-        </profile>
-
-    </profiles>
 
     <build>
         <plugins>
