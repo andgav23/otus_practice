@@ -7,43 +7,31 @@ import org.example.dto.TagDTO;
 import java.util.List;
 
 public class PetDataFactory {
-  private final long PET_ID = 500;
-  private final String PET_NAME = "Andrey";
-  private final List<String> PET_PHOTO_URLS = List.of("url1", "url2");
-  private final long CATEGORY_ID = 18;
-  private final String CATEGORY_NAME = "Bug";
-  private final List<TagDTO> PET_TAGS = List.of(TagDTO.builder()
-      .id(59)
-      .name("tag_1")
-      .build(), TagDTO.builder()
-      .id(60)
-      .name("tag_2")
-      .build());
+  private final String petName = "Andrey";
+  private final List<String> petPhotoUrls = List.of("url1", "url2");
+  private final long categoryId = 18;
+  private final String categoryName = "Bug";
+  private final List<TagDTO> petTags = List.of(TagDTO.builder().id(59).name("tag_1").build(), TagDTO.builder().id(60).name("tag_2").build());
+  private final long notExistingPetId = 1111111111;
 
 
   public PetDTO createPetWithFullFields() {
-    return PetDTO.builder()
-        .id(PET_ID)
-        .category(CategoryDTO.builder()
-            .id(CATEGORY_ID)
-            .name(CATEGORY_NAME).build()
-        )
-        .name(PET_NAME)
-        .photoUrls(PET_PHOTO_URLS)
-        .tags(PET_TAGS)
-        .status(StatusData.PENDING).build();
+    PetDTO pet = PetDTO.builder()
+        .category(CategoryDTO.builder().id(categoryId).name(categoryName).build())
+        .name(petName)
+        .photoUrls(petPhotoUrls)
+        .tags(petTags)
+        .status(StatusData.PENDING)
+        .build();
+    return pet;
   }
 
-  public PetDTO createPetWithoutId() {
-    return PetDTO.builder()
-        .category(CategoryDTO.builder()
-            .id(CATEGORY_ID)
-            .name(CATEGORY_NAME).build()
-        )
-        .name(PET_NAME)
-        .photoUrls(PET_PHOTO_URLS)
-        .tags(PET_TAGS)
-        .status(StatusData.PENDING).build();
+  public PetDTO createEmptyPet() {
+    return PetDTO.builder().build();
+  }
+
+  public long getNotExistingPetId() {
+    return notExistingPetId;
   }
 
 
