@@ -1,0 +1,66 @@
+version: "3.5"
+
+services:
+  selenoid:
+    networks:
+      - selenoid_otus
+    image: aerokube/selenoid:1.11.0
+    container_name: selenoid1
+    volumes:
+      - "./selenoid/config:/etc/selenoid:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./selenoid/logs:/opt/selenoid/logs"
+    command: ["-conf", "/etc/selenoid/browsers.json", "-log-output-dir", "/opt/selenoid/logs", "-container-network", "selenoid_otus", "-limit", "8"]
+    ports:
+      - "4444:4444"
+      - "5900:5900"
+  ggr:
+    networks:
+      - selenoid_otus
+    image: aerokube/ggr:1.7.1
+    container_name: ggr
+    depends_on:
+      - selenoid
+    volumes:
+      - "/etc/grid-router/:/etc/grid-router:ro"
+    command: ["-guests-allowed", "-guests-quota", "test", "-verbose", "-quotaDir", "/etc/grid-router/quota"]
+    ports:
+      - "4446:4444"
+  ggr-ui:
+    networks:
+      - selenoid_otus
+    image: aerokube/ggr-ui:1.1.2
+    container_name: ggr-ui
+    depends_on:
+      - ggr
+    volumes:
+      - "/etc/grid-router/quota/:/etc/grid-router/quota:ro"
+    ports:
+      - "8888:8888"
+  selenoid-ui:
+    networks:
+      - selenoid_otus
+    image: aerokube/selenoid-ui:1.8.0
+    container_name: selenoid-ui
+    depends_on:
+      - ggr-ui
+    command: ["--selenoid-uri", "http://172.16.0.1:8888"]
+    ports:
+      - "8080:8080"
+  nginx:
+    image: nginx:1.25.3
+    container_name: nginx-otus
+    volumes:
+      - "/home/otus/nginx/:/etc/nginx/conf.d:ro"
+    network_mode: host
+  
+
+networks:
+  selenoid_otus:
+    name: selenoid_otus
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/28
+          gateway: 172.16.0.1
