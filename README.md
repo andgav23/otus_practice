@@ -1,3 +1,3 @@
-# Запуск тестов
-ветка master, команда:
-mvn clean test
+# Запуск
+chmod +x ./install.sh
+./install.sh
