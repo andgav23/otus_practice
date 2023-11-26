@@ -13,12 +13,14 @@ install_if_not_exist() {
 
 install_if_not_exist apache2-utils
 sudo apt install apache2-utils
-mkdir -p /etc/grid-router/quota
-cp ./selenoid/balancing_rules/test.xml /etc/grid-router/quota
+sudo mkdir -p /etc/grid-router/quota
+sudo cp ./selenoid/balancing_rules/test.xml /etc/grid-router/quota
 htpasswd -bc /etc/grid-router/users.htpasswd test test-password
 
 for each in {"selenoid/chrome:119.0","selenoid/chrome:118.0","selenoid/opera:91.0","selenoid/opera:90.0"};
 do docker pull $each;
 done
+
+docker compose up -d
 
 
