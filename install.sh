@@ -21,6 +21,4 @@ for each in {"selenoid/chrome:119.0","selenoid/chrome:118.0","selenoid/opera:91.
 do docker pull $each;
 done
 
-docker compose up -d
-
-
+docker compose -f docker-compose.yml up -d
