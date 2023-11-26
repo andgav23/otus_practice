@@ -21,6 +21,4 @@ for each in {"selenoid/chrome:119.0","selenoid/chrome:118.0","selenoid/opera:91.
 do docker pull $each;
 done
 
-mkdir -p /home/otus/nginx
-cp ./selenoid/nginx.conf /home/otus/nginx/selenoid.conf
-cp ./selenoid/balancing_rules/test.xml /etc/grid-router/quota
+
