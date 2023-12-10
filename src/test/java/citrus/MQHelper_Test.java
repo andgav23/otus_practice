@@ -15,10 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 
 @CitrusSpringSupport
 @ContextConfiguration(classes = CitrusSpringConfig.class)
-public class MQHelper2_Test {
+public class MQHelper_Test {
   @RegisterExtension
   public EmbeddedActiveMQExtension server = new EmbeddedActiveMQExtension();
-
 
   @Autowired
   private JmsEndpoint MQEndpoint;
