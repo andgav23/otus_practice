@@ -1,0 +1,16 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://citrusframework.org/samples/todolist"
+           targetNamespace="http://citrusframework.org/samples/todolist" elementFormDefault="qualified">
+
+  <xs:element name="user">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="id"/>
+        <xs:element type="xs:string" name="name"/>
+        <xs:element type="xs:string" name="school_name"/>
+        <xs:element type="xs:string" name="city"/>
+        <xs:element type="xs:byte" name="grade"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

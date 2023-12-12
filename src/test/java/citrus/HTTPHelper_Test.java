@@ -1,15 +1,12 @@
-package wiremock;
+package citrus;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import java.io.IOException;
@@ -20,7 +17,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @WireMockTest
-public class First_Test {
+public class HTTPHelper_Test {
   @RegisterExtension
   static WireMockExtension wm1 = WireMockExtension.newInstance()
       .options(wireMockConfig().withRootDirectory("path/to/root"))

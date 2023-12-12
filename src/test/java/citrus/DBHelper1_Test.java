@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import javax.sql.DataSource;
+
 @CitrusSpringSupport
 @ContextConfiguration(classes = CitrusSpringConfig.class)
-public class DBHelper_Test {
+public class DBHelper1_Test {
   @Autowired
   private DataSource helperDataSource;
 

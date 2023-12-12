@@ -148,6 +148,12 @@
         </dependency>
         <dependency>
             <groupId>org.citrusframework</groupId>
+            <artifactId>citrus-ws</artifactId>
+            <version>${citrus.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.citrusframework</groupId>
             <artifactId>citrus-validation-xml</artifactId>
             <version>${citrus.version}</version>
         </dependency>

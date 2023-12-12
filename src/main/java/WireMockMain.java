@@ -5,7 +5,8 @@ public class WireMockMain {
   public static void main(String[] args) {
     stubs.wireMockStart()
         .getAllUsers("users.json")
-        .getUser("user.json")
+        .getUserOne("user-id1.json")
+        .getUserTwo("user-id2.json")
         .pingPong();}
 
 }

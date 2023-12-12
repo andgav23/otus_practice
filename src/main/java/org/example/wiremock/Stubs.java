@@ -33,9 +33,18 @@ public class Stubs {
     return this;
   }
 
-  public Stubs getUser(String responseFileName) {
+  public Stubs getUserOne(String responseFileName) {
     //jsonBuilder.setJsonObject(responseFileName);
     wireMockServer.stubFor(get("/users/get/user-id1")
+        .willReturn(aResponse()
+            .withStatus(200)
+            .withHeader("Content-Type", "application/json")
+            .withBodyFile("json/" + responseFileName)));
+    return this;
+  }
+  public Stubs getUserTwo(String responseFileName) {
+    //jsonBuilder.setJsonObject(responseFileName);
+    wireMockServer.stubFor(get("/users/get/user-id2")
         .willReturn(aResponse()
             .withStatus(200)
             .withHeader("Content-Type", "application/json")
