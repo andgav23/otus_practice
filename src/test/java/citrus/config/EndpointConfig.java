@@ -64,13 +64,13 @@ public class EndpointConfig {
             .build();
     }
 
-    @Bean
-    public AfterSuite afterSuite(BasicDataSource todoListDataSource) {
-        return new SequenceAfterSuite.Builder()
-            .actions(sql(todoListDataSource)
-                .statement("DELETE FROM otus_students"))
-            .build();
-    }
+//    @Bean
+//    public AfterSuite afterSuite(BasicDataSource todoListDataSource) {
+//        return new SequenceAfterSuite.Builder()
+//            .actions(sql(todoListDataSource)
+//                .statement("DELETE FROM otus_students"))
+//            .build();
+//    }
 
     @Bean(destroyMethod = "close", name="helperDataSource")
     public BasicDataSource helperDataSource() {
