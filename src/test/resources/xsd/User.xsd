@@ -4,11 +4,11 @@
   <xs:element name="user">
     <xs:complexType>
       <xs:sequence>
-        <xs:element type="xs:string" name="id"/>
+        <xs:element type="xs:string" name="id2"/>
         <xs:element type="xs:string" name="name"/>
         <xs:element type="xs:string" name="school_name"/>
         <xs:element type="xs:string" name="city"/>
-        <xs:element type="xs:byte" name="grade"/>
+        <xs:element type="xs:nonNegativeInteger" name="grade"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

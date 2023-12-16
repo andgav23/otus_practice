@@ -25,18 +25,13 @@ import org.citrusframework.jms.endpoint.JmsEndpoint;
 import org.citrusframework.variable.GlobalVariables;
 import org.citrusframework.ws.client.WebServiceClient;
 import org.citrusframework.ws.server.WebServiceServer;
-import org.citrusframework.xml.Jaxb2Marshaller;
-import org.citrusframework.xml.Marshaller;
 import org.citrusframework.xml.XsdSchemaRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
 import org.springframework.ws.soap.SoapMessageFactory;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.xml.xsd.SimpleXsdSchema;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,23 +85,16 @@ public class EndpointConfig {
         return dataSource;
     }
 //    SOAP
-@Bean
-public GlobalVariables globalVariables() {
-    GlobalVariables variables = new GlobalVariables();
-    variables.getVariables().put("todoId", "702c4a4e-5c8a-4ce2-a451-4ed435d3604a");
-    variables.getVariables().put("todoName", "todo_1871");
-    variables.getVariables().put("todoDescription", "Description: todo_1871");
-    return variables;
-}
+
     @Bean
-    public SimpleXsdSchema todoListSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("xsd/TodoList.xsd"));
+    public SimpleXsdSchema userSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/User.xsd"));
     }
 
     @Bean
     public XsdSchemaRepository schemaRepository() {
         XsdSchemaRepository schemaRepository = new XsdSchemaRepository();
-        schemaRepository.getSchemas().add(todoListSchema());
+        schemaRepository.getSchemas().add(userSchema());
         return schemaRepository;
     }
 
@@ -116,16 +104,16 @@ public GlobalVariables globalVariables() {
     }
 
     @Bean
-    public WebServiceClient todoClient() {
+    public WebServiceClient userClient() {
         return CitrusEndpoints
             .soap()
             .client()
-            .defaultUri("http://localhost:8080/services/ws/todolist")
+            .defaultUri("http://localhost:8080/services/ws/user")
             .build();
     }
 
     @Bean
-    public WebServiceServer todoListServer(TestContextFactory contextFactory) {
+    public WebServiceServer userServer(TestContextFactory contextFactory) {
         return CitrusEndpoints
             .soap()
             .server()
@@ -152,40 +140,20 @@ public GlobalVariables globalVariables() {
     @Bean
     public SimpleMappingStrategy mappingStrategy(TestContextFactory contextFactory) {
         SimpleMappingStrategy mappingStrategy = new SimpleMappingStrategy();
-
         Map<String, EndpointAdapter> mappings = new HashMap<>();
-
-        mappings.put("getTodo", todoResponseAdapter(contextFactory));
-        mappings.put("getTodoList", todoListResponseAdapter(contextFactory));
-
+        mappings.put("getUser", userResponseAdapter(contextFactory));
         mappingStrategy.setAdapterMappings(mappings);
         return mappingStrategy;
     }
 
     @SneakyThrows
     @Bean
-    public EndpointAdapter todoResponseAdapter(TestContextFactory contextFactory) {
+    public EndpointAdapter userResponseAdapter(TestContextFactory contextFactory) {
         StaticResponseEndpointAdapter endpointAdapter = new StaticResponseEndpointAdapter();
         endpointAdapter.setMessagePayload(xmlFromFile("xml/SOAPResponse.xml"));
         endpointAdapter.setTestContextFactory(contextFactory);
         return endpointAdapter;
     }
 
-    @Bean
-    public EndpointAdapter todoListResponseAdapter(TestContextFactory contextFactory) {
-        StaticResponseEndpointAdapter endpointAdapter = new StaticResponseEndpointAdapter();
-        endpointAdapter.setMessagePayload("<getTodoListResponse xmlns=\"http://citrusframework.org/samples/todolist\">" +
-            "<list>" +
-            "<todoEntry>" +
-            "<id>${todoId}</id>" +
-            "<title>${todoName}</title>" +
-            "<description>${todoDescription}</description>" +
-            "<done>false</done>" +
-            "</todoEntry>" +
-            "</list>" +
-            "</getTodoListResponse>");
-        endpointAdapter.setTestContextFactory(contextFactory);
-        return endpointAdapter;
-    }
 
 }
