@@ -2,7 +2,6 @@ package citrus;
 
 import static org.example.utils.XmlBuilder.xmlFromFile;
 import citrus.clients.SoapClient;
-import io.cucumber.java.en.Given;
 import lombok.SneakyThrows;
 import org.citrusframework.TestActionRunner;
 import org.citrusframework.annotations.CitrusResource;
@@ -23,10 +22,9 @@ public class SOAPHelper_Test {
   @SneakyThrows
   @Test
 //  @CitrusTest
-
   public void tableShouldBeContainRows(@CitrusResource TestActionRunner actions) {
-
-    SoapClient client = new SoapClient();
-    actions.$(client.getUser(actions, userClient).body(xmlFromFile("xml/SOAPResponse.xml")));
+//
+//    SoapClient client = new SoapClient();
+//    actions.$(client.soapSend(actions, userClient).body(xmlFromFile("xml/SOAPResponse.xml")));
   }
 }

@@ -10,13 +10,13 @@ import org.citrusframework.ws.client.WebServiceClient;
 @NoArgsConstructor
 public class SoapClient {
 
-  public ReceiveSoapMessageAction.SoapMessageBuilderSupport getUser(TestActionRunner actions, WebServiceClient userClient) {
+  public ReceiveSoapMessageAction.SoapMessageBuilderSupport soapSend(TestActionRunner actions, WebServiceClient userClient, String file) {
     actions.$(soap()
         .client(userClient)
         .send()
         .message()
         .soapAction("getUser")
-        .body(xmlFromFile("xml/Some.xml")));
+        .body(xmlFromFile(file)));
 
     return soap()
         .client(userClient)

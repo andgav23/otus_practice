@@ -4,6 +4,7 @@ package citrus.config;
 
 import static org.citrusframework.actions.ExecuteSQLAction.Builder.sql;
 import static org.example.utils.XmlBuilder.xmlFromFile;
+import citrus.services.SoapService;
 import jakarta.jms.ConnectionFactory;
 import lombok.SneakyThrows;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
@@ -154,6 +155,18 @@ public class EndpointConfig {
         endpointAdapter.setTestContextFactory(contextFactory);
         return endpointAdapter;
     }
+    @Bean(name="soapService")
+    public SoapService soapService(){
+        return new SoapService();
+    }
 
+    @Bean
+    public GlobalVariables globalVariables() {
+        GlobalVariables variables = new GlobalVariables();
+        variables.getVariables().put("todoId", "702c4a4e-5c8a-4ce2-a451-4ed435d3604a");
+        variables.getVariables().put("todoName", "todo_1871");
+        variables.getVariables().put("todoDescription", "Description: todo_1871");
+        return variables;
+    }
 
 }
