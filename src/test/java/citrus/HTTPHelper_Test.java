@@ -1,43 +1,40 @@
 package citrus;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
-import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
-import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import static org.citrusframework.http.actions.HttpActionBuilder.http;
+import static org.example.utils.JsonBuilder.jsonFromFile;
+import org.apache.hc.core5.http.ContentType;
+import org.citrusframework.TestActionRunner;
+import org.citrusframework.annotations.CitrusResource;
+import org.citrusframework.annotations.CitrusTest;
+import org.citrusframework.http.client.HttpClient;
+import org.citrusframework.message.MessageType;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
-@WireMockTest
+
 public class HTTPHelper_Test {
-  @RegisterExtension
-  static WireMockExtension wm1 = WireMockExtension.newInstance()
-      .options(wireMockConfig().withRootDirectory("path/to/root"))
-      .build();
+  @Autowired
+  private HttpClient httpUserClient;
 
   @Test
-  public void exactUrlOnly(WireMockRuntimeInfo wmRuntimeInfo) throws URISyntaxException, IOException, InterruptedException {
-    stubFor(get(urlEqualTo("/some/thing"))
-        .willReturn(aResponse()
-            .withHeader("Content-Type", "text/plain")
-            .withBody("Hello world!")
-            .withStatus(400)));
+  @CitrusTest
+  public void testTodo(@CitrusResource TestActionRunner actions) {
+    actions.$(http()
+        .client(httpUserClient)
+        .send()
+        .get("/users/get/user-id1")
+        .message()
+        .accept(ContentType.APPLICATION_JSON.getMimeType()));
 
-    final HttpClient client = HttpClient.newBuilder().build();
-    final HttpRequest request = HttpRequest.newBuilder()
-        .uri(new URI(wmRuntimeInfo.getHttpBaseUrl() + "/some/thing"))
-//        .header("Content-Type", "text/xml")
-        .GET().build();
-
-    assertEquals(client.send(request, HttpResponse.BodyHandlers.ofString()).statusCode(), 200);
-//    assertThat(testClient.get("/some/thing/else").statusCode(), is(404));
+    actions.$(http()
+        .client(httpUserClient)
+        .receive()
+        .response(HttpStatus.OK)
+        .message()
+        .type(MessageType.JSON)
+        .body(jsonFromFile("__files/json/user-id1.json")));
   }
-}
+
+  }
+

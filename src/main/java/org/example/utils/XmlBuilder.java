@@ -16,13 +16,4 @@ public class XmlBuilder {
 
   }
 
-//  @SneakyThrows
-//  public static String someXmlAsString() {
-//    JAXBContext context = JAXBContext.newInstance(SomeXmlDTO.class);
-//    StringWriter sw = new StringWriter();
-//    Marshaller marshaller = context.createMarshaller();
-//    marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-//    marshaller.marshal(new SomeXmlDTO(),sw);
-//    return sw.toString();
-//  }
 }
