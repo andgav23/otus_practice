@@ -6,6 +6,7 @@ import static org.citrusframework.actions.ExecuteSQLAction.Builder.sql;
 import static org.example.utils.JsonBuilder.jsonFromFile;
 import static org.example.utils.XmlBuilder.xmlFromFile;
 import citrus.services.HttpService;
+import citrus.services.MqService;
 import citrus.services.SoapService;
 import jakarta.jms.ConnectionFactory;
 import lombok.SneakyThrows;
@@ -244,6 +245,9 @@ public HttpClient httpUserClient() {
     public HttpService httpService(){
         return new HttpService();
     }
-
+    @Bean
+    public MqService mqService(){
+        return new MqService();
+    }
 
 }
