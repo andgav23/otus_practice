@@ -1,7 +1,7 @@
 package citrus;
 
 import static org.citrusframework.http.actions.HttpActionBuilder.http;
-import static org.example.utils.JsonBuilder.jsonFromFile;
+import static org.example.utils.JsonBuilder.jsonFromFileToString;
 import org.apache.hc.core5.http.ContentType;
 import org.citrusframework.TestActionRunner;
 import org.citrusframework.annotations.CitrusResource;
@@ -33,7 +33,7 @@ public class HTTPHelper_Test {
         .response(HttpStatus.OK)
         .message()
         .type(MessageType.JSON)
-        .body(jsonFromFile("__files/json/user-id1.json")));
+        .body(jsonFromFileToString("__files/json/user-id1.json")));
   }
 
   }

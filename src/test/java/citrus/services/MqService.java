@@ -3,7 +3,7 @@ package citrus.services;
 import static org.citrusframework.actions.EchoAction.Builder.echo;
 import static org.citrusframework.actions.ReceiveMessageAction.Builder.receive;
 import static org.citrusframework.actions.SendMessageAction.Builder.send;
-import static org.example.utils.JsonBuilder.jsonFromFile;
+import static org.example.utils.JsonBuilder.jsonFromFileToString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.artemis.junit.EmbeddedActiveMQExtension;
@@ -28,7 +28,7 @@ public class MqService {
     runner.$(send()
         .endpoint(MQEndpoint)
         .message()
-        .body(jsonFromFile(message)));
+        .body(jsonFromFileToString(message)));
 
   }
 
@@ -41,7 +41,7 @@ public class MqService {
     runner.$(receive()
         .endpoint(MQEndpoint)
         .message()
-        .body(jsonFromFile(message)));
+        .body(jsonFromFileToString(message)));
 
   }
 

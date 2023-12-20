@@ -20,6 +20,7 @@ public class DBHelper1_Test {
   @Test
   @CitrusTest
   public void tableShouldBeContainRows(@CitrusResource TestActionRunner actions) {
+
     actions.$(query(helperDataSource)
         .statement("select count(*) as cnt from otus_students")
         .validate("cnt", "1"));

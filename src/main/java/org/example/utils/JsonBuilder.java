@@ -1,16 +1,16 @@
 package org.example.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class JsonBuilder {
@@ -36,9 +36,12 @@ public class JsonBuilder {
     return jsonObject;
   }
   @SneakyThrows
-  public static String jsonFromFile(String path) {
+  public static String jsonFromFileToString(String path) {
     return StreamUtils.copyToString(new ClassPathResource(path).getInputStream(), Charset.defaultCharset());
-
+  }
+  @SneakyThrows
+  public static Map<String, Object> jsonFromFileToMap(String path) {
+    return new ObjectMapper().readValue(new ClassPathResource(path).getInputStream(), HashMap.class);
   }
 
 }
