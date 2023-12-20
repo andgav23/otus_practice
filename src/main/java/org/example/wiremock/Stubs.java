@@ -42,8 +42,8 @@ public class Stubs {
             .withBodyFile("json/" + responseFileName)));
     return this;
   }
+
   public Stubs getUserTwo(String responseFileName) {
-    //jsonBuilder.setJsonObject(responseFileName);
     wireMockServer.stubFor(get("/users/get/user-id2")
         .willReturn(aResponse()
             .withStatus(200)
@@ -53,7 +53,6 @@ public class Stubs {
   }
 
   public Stubs pingPong() {
-    //jsonBuilder.setJsonObject(responseFileName);
     wireMockServer.stubFor(get("/ping-pong")
         .willReturn(aResponse()
             .withStatus(200)

@@ -3,17 +3,11 @@ package citrus.cucumber.steps;
 import citrus.services.SoapService;
 import io.cucumber.java.ru.Если;
 import io.cucumber.java.ru.Тогда;
-import io.cucumber.spring.CucumberContextConfiguration;
-import lombok.extern.slf4j.Slf4j;
 import org.citrusframework.TestCaseRunner;
 import org.citrusframework.annotations.CitrusResource;
-import org.citrusframework.config.CitrusSpringConfig;
 import org.citrusframework.ws.actions.ReceiveSoapMessageAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
-//@CucumberContextConfiguration
-//@ContextConfiguration(classes = CitrusSpringConfig.class)
 public class SoapHelperSteps {
   @CitrusResource
   private TestCaseRunner runner;

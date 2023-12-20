@@ -29,7 +29,6 @@ public class JsonBuilder {
 
   public JSONObject readJsonAsObject() {
     InputStream fileInputStream = null;
-    log.info(jsonFilePath);
     fileInputStream = getClass().getClassLoader().getResourceAsStream(jsonFilePath);
     JSONTokener jsonTokener = new JSONTokener(fileInputStream);
     jsonObject = new JSONObject(jsonTokener);

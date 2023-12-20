@@ -1,8 +1,8 @@
 package citrus.clients;
 
 import static org.citrusframework.ws.actions.SoapActionBuilder.soap;
-
 import static org.example.utils.XmlBuilder.xmlFromFile;
+
 import lombok.NoArgsConstructor;
 import org.citrusframework.TestActionRunner;
 import org.citrusframework.ws.actions.ReceiveSoapMessageAction;

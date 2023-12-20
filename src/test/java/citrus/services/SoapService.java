@@ -1,6 +1,7 @@
 package citrus.services;
 
 import static org.example.utils.XmlBuilder.xmlFromFile;
+
 import citrus.clients.UserSoapClient;
 import org.citrusframework.TestCaseRunner;
 import org.citrusframework.ws.actions.ReceiveSoapMessageAction;

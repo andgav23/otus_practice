@@ -1,6 +1,7 @@
 package citrus.clients;
 
 import static org.citrusframework.http.actions.HttpActionBuilder.http;
+
 import lombok.NoArgsConstructor;
 import org.apache.hc.core5.http.ContentType;
 import org.citrusframework.TestActionRunner;

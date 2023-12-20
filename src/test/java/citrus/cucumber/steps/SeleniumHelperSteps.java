@@ -23,12 +23,12 @@ public class SeleniumHelperSteps {
   }
 
   @Если("Открыть страницу {string}")
-  public void openPageByUrl(String pageUrl){
+  public void openPageByUrl(String pageUrl) {
     seleniumService.openUrl(runner, pageUrl);
   }
 
   @Тогда("Открыта страница с заголовком {string}")
-  public void pageShouldBeHaveHeaderAs(String expectedHeader){
+  public void pageShouldBeHaveHeaderAs(String expectedHeader) {
     seleniumService.checkHeader(runner, expectedHeader);
   }
 

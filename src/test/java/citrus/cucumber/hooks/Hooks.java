@@ -1,9 +1,7 @@
 package citrus.cucumber.hooks;
 
 import citrus.services.MqService;
-
 import io.cucumber.java.After;
-
 import io.cucumber.java.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 

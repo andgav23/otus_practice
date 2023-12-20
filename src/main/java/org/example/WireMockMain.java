@@ -1,3 +1,5 @@
+package org.example;
+
 import org.example.wiremock.Stubs;
 
 public class WireMockMain {

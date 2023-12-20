@@ -6,8 +6,8 @@
     Если Отправить xml файл "<request>"
     Тогда Получен ответ по схеме xsd с содержимым "<response>"
     Примеры:
-      | request      | response             |
-      | xml/Some.xml | xml/SOAPResponse.xml |
+      | request              | response                     |
+      | __files/xml/Some.xml | __files/xml/SOAPResponse.xml |
 
   Структура сценария: HTTP helper
     Если Запросить данные о пользователе "<id>"
@@ -21,7 +21,7 @@
   Структура сценария: MQ helper
     Если Отправить сообщение "<message>"
     Тогда Количество сообщений в очереди <message_count>
-    Тогда Сообщение в очереди совпадает с "<message>"
+    * Сообщение в очереди совпадает с "<message>"
     Примеры:
       | message                    | message_count |
       | __files/json/user-id1.json | 1             |

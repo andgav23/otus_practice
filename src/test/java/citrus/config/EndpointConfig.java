@@ -1,4 +1,3 @@
-
 package citrus.config;
 
 
@@ -7,6 +6,7 @@ import static org.citrusframework.actions.SleepAction.Builder.sleep;
 import static org.citrusframework.selenium.actions.SeleniumActionBuilder.selenium;
 import static org.example.utils.JsonBuilder.jsonFromFileToString;
 import static org.example.utils.XmlBuilder.xmlFromFile;
+
 import citrus.services.*;
 import jakarta.jms.ConnectionFactory;
 import lombok.SneakyThrows;
@@ -46,8 +46,6 @@ import java.util.Map;
 
 @Configuration
 public class EndpointConfig {
-
-
   // MQ
   @Bean
   public ConnectionFactory connectionFactory() {
@@ -56,12 +54,7 @@ public class EndpointConfig {
 
   @Bean(name = "MQEndpoint")
   public JmsEndpoint todoJmsEndpoint(ConnectionFactory connectionFactory) {
-    return CitrusEndpoints.
-        jms()
-        .asynchronous()
-        .connectionFactory(connectionFactory)
-        .destination("otus.queue")
-        .build();
+    return CitrusEndpoints.jms().asynchronous().connectionFactory(connectionFactory).destination("otus.queue").build();
   }
 
   @Bean
@@ -72,21 +65,13 @@ public class EndpointConfig {
   // DB
   @Bean
   public BeforeSuite beforeSuite(BasicDataSource todoListDataSource) {
-    return new SequenceBeforeSuite.Builder()
-        .actions(sql(todoListDataSource)
-            .statement("CREATE TABLE IF NOT EXISTS users " +
-                "(id VARCHAR(20), name VARCHAR(50), school_name VARCHAR(50), city VARCHAR(20), grade NUMBER )"))
-        .build();
+    return new SequenceBeforeSuite.Builder().actions(sql(todoListDataSource).statement("CREATE TABLE IF NOT EXISTS users " + "(id VARCHAR(20), name VARCHAR(50), school_name VARCHAR(50), city VARCHAR(20), grade NUMBER )")).build();
   }
 
   @Bean
   @DependsOn("browser")
   public AfterSuite afterSuite(BasicDataSource todoListDataSource, SeleniumBrowser browser) {
-    return new SequenceAfterSuite.Builder()
-        .actions(sql(todoListDataSource)
-            .statement("DELETE FROM users"))
-        .actions(selenium().browser(browser).stop())
-        .build();
+    return new SequenceAfterSuite.Builder().actions(sql(todoListDataSource).statement("DELETE FROM users")).actions(selenium().browser(browser).stop()).build();
   }
 
   @Bean(destroyMethod = "close", name = "helperDataSource")
@@ -110,7 +95,7 @@ public class EndpointConfig {
   // SOAP
   @Bean
   public SimpleXsdSchema userXsdSchema() {
-    return new SimpleXsdSchema(new ClassPathResource("xsd/User.xsd"));
+    return new SimpleXsdSchema(new ClassPathResource("__files/xsd/User.xsd"));
   }
 
   @Bean
@@ -127,23 +112,12 @@ public class EndpointConfig {
 
   @Bean
   public WebServiceClient soapUserClient() {
-    return CitrusEndpoints
-        .soap()
-        .client()
-        .defaultUri("http://localhost:8080/services/ws/user")
-        .build();
+    return CitrusEndpoints.soap().client().defaultUri("http://localhost:8080/services/ws/user").build();
   }
 
   @Bean
   public WebServiceServer soapUserServer(TestContextFactory contextFactory) {
-    return CitrusEndpoints
-        .soap()
-        .server()
-        .port(8080)
-        .endpointAdapter(soapDispatchingEndpointAdapter(contextFactory))
-        .timeout(10000)
-        .autoStart(true)
-        .build();
+    return CitrusEndpoints.soap().server().port(8080).endpointAdapter(soapDispatchingEndpointAdapter(contextFactory)).timeout(10000).autoStart(true).build();
   }
 
   @Bean
@@ -172,7 +146,7 @@ public class EndpointConfig {
   @Bean
   public EndpointAdapter soapUserResponseAdapter(TestContextFactory contextFactory) {
     StaticResponseEndpointAdapter endpointAdapter = new StaticResponseEndpointAdapter();
-    endpointAdapter.setMessagePayload(xmlFromFile("xml/SOAPResponse.xml"));
+    endpointAdapter.setMessagePayload(xmlFromFile("__files/xml/SOAPResponse.xml"));
     endpointAdapter.setTestContextFactory(contextFactory);
     return endpointAdapter;
   }
@@ -185,23 +159,12 @@ public class EndpointConfig {
   //HTTP
   @Bean
   public HttpClient httpUserClient() {
-    return CitrusEndpoints
-        .http()
-        .client()
-        .requestUrl("http://localhost:8081")
-        .build();
+    return CitrusEndpoints.http().client().requestUrl("http://localhost:8081").build();
   }
 
   @Bean
   public HttpServer httpUserServer(TestContextFactory contextFactory) throws Exception {
-    return CitrusEndpoints
-        .http()
-        .server()
-        .port(8081)
-        .endpointAdapter(httpDispatchingEndpointAdapter(contextFactory))
-        .timeout(10000)
-        .autoStart(true)
-        .build();
+    return CitrusEndpoints.http().server().port(8081).endpointAdapter(httpDispatchingEndpointAdapter(contextFactory)).timeout(10000).autoStart(true).build();
   }
 
   @Bean
@@ -253,30 +216,17 @@ public class EndpointConfig {
     return new HttpService();
   }
 
-//  selenium
-@Bean
-public SeleniumBrowser browser() {
-  return CitrusEndpoints
-      .selenium()
-      .browser()
-      .type(Browser.CHROME.browserName())
-      .build();
-}
-
-//  @Bean
-//  @DependsOn("browser")
-//  public AfterSuite afterSuite(SeleniumBrowser browser) {
-//    return new SequenceAfterSuite.Builder()
-//        .actions(selenium().browser(browser).stop())
-//        .build();
-//  }
+  //  selenium
+  @Bean
+  public SeleniumBrowser browser() {
+    return CitrusEndpoints.selenium().browser().type(Browser.CHROME.browserName()).build();
+  }
 
   @Bean
   public AfterTest afterTest() {
-    return new SequenceAfterTest.Builder()
-        .actions(sleep().milliseconds(500L))
-        .build();
+    return new SequenceAfterTest.Builder().actions(sleep().milliseconds(500L)).build();
   }
+
   @Bean
   public SeleniumService seleniumService() {
     return new SeleniumService();
