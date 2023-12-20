@@ -34,6 +34,7 @@ import org.citrusframework.json.JsonSchemaRepository;
 
 import org.citrusframework.spi.Resource;
 import org.citrusframework.spi.Resources;
+import org.citrusframework.variable.GlobalVariables;
 import org.citrusframework.ws.client.WebServiceClient;
 import org.citrusframework.ws.server.WebServiceServer;
 import org.citrusframework.xml.XsdSchemaRepository;
@@ -52,6 +53,15 @@ import java.util.Map;
 
 @Configuration
 public class EndpointConfig {
+
+    @Bean
+    public GlobalVariables globalVariables() {
+        GlobalVariables variables = new GlobalVariables();
+        variables.getVariables().put("todoId", "702c4a4e-5c8a-4ce2-a451-4ed435d3604a");
+        variables.getVariables().put("todoName", "todo_1871");
+        variables.getVariables().put("todoDescription", "Description: todo_1871");
+        return variables;
+    }
 
 // MQ
     @Bean

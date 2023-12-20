@@ -1,32 +1,49 @@
 package citrus.services;
 
+import static org.citrusframework.actions.EchoAction.Builder.echo;
+import static org.citrusframework.actions.ReceiveMessageAction.Builder.receive;
 import static org.citrusframework.actions.SendMessageAction.Builder.send;
-import static org.citrusframework.validation.json.JsonMessageValidationContext.Builder.json;
-import static org.citrusframework.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
-import citrus.clients.UserHttpClient;
+import static org.example.utils.JsonBuilder.jsonFromFile;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.artemis.junit.EmbeddedActiveMQExtension;
 import org.citrusframework.TestCaseRunner;
-import org.citrusframework.http.actions.HttpClientResponseActionBuilder;
-import org.citrusframework.http.client.HttpClient;
 import org.citrusframework.jms.endpoint.JmsEndpoint;
+import org.citrusframework.variable.GlobalVariables;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 public class MqService {
+  private final String QUEUE_NAME = "otus.queue";
   @RegisterExtension
   public EmbeddedActiveMQExtension server = new EmbeddedActiveMQExtension();
   @Autowired
   private JmsEndpoint MQEndpoint;
+  @Autowired
+  private GlobalVariables globalVariables;
 
-
-  public void sendMessage(TestCaseRunner runner){
+  public void sendMqMessage(TestCaseRunner runner, String message){
 
     runner.$(send()
         .endpoint(MQEndpoint)
         .message()
-        .body("payload"));
+        .body(jsonFromFile(message)));
 
   }
+
+  public void checkQueueSize(int queueSize) {
+    assertEquals(queueSize, server.getMessageCount(QUEUE_NAME));
+  }
+
+  public void checkMessage(TestCaseRunner runner, String message){
+
+    runner.$(receive()
+        .endpoint(MQEndpoint)
+        .message()
+        .body(jsonFromFile(message)));
+
+  }
+
+
 }
