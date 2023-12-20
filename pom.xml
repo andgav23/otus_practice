@@ -173,6 +173,12 @@
             <version>${citrus.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.citrusframework</groupId>
+            <artifactId>citrus-selenium</artifactId>
+            <version>${citrus.version}</version>
+            <scope>test</scope>
+        </dependency>
 <!--        MQ-->
         <dependency>
             <groupId>org.apache.activemq</groupId>

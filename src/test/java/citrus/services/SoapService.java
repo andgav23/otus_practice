@@ -1,7 +1,7 @@
 package citrus.services;
 
 import static org.example.utils.XmlBuilder.xmlFromFile;
-import citrus.clients.SoapClient;
+import citrus.clients.UserSoapClient;
 import org.citrusframework.TestCaseRunner;
 import org.citrusframework.ws.actions.ReceiveSoapMessageAction;
 import org.citrusframework.ws.client.WebServiceClient;
@@ -12,7 +12,7 @@ public class SoapService {
   private WebServiceClient userClient;
 
   public ReceiveSoapMessageAction.SoapMessageBuilderSupport sendSoapMessage(TestCaseRunner runner, String file) {
-    SoapClient client = new SoapClient();
+    UserSoapClient client = new UserSoapClient();
     return client.soapSend(runner, userClient, file);
   }
 

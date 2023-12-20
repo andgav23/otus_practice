@@ -8,7 +8,7 @@ import org.citrusframework.TestActionRunner;
 import org.citrusframework.ws.actions.ReceiveSoapMessageAction;
 import org.citrusframework.ws.client.WebServiceClient;
 @NoArgsConstructor
-public class SoapClient {
+public class UserSoapClient {
 
   public ReceiveSoapMessageAction.SoapMessageBuilderSupport soapSend(TestActionRunner actions, WebServiceClient userClient, String file) {
     actions.$(soap()

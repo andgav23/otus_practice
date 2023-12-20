@@ -20,8 +20,6 @@ public class MqService {
   public EmbeddedActiveMQExtension server = new EmbeddedActiveMQExtension();
   @Autowired
   private JmsEndpoint MQEndpoint;
-  @Autowired
-  private GlobalVariables globalVariables;
 
   public void sendMqMessage(TestCaseRunner runner, String message){
 

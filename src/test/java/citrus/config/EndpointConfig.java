@@ -3,21 +3,18 @@ package citrus.config;
 
 
 import static org.citrusframework.actions.ExecuteSQLAction.Builder.sql;
+import static org.citrusframework.actions.SleepAction.Builder.sleep;
+
+import static org.citrusframework.selenium.actions.SeleniumActionBuilder.selenium;
 import static org.example.utils.JsonBuilder.jsonFromFileToString;
 import static org.example.utils.XmlBuilder.xmlFromFile;
-import citrus.services.DbService;
-import citrus.services.HttpService;
-import citrus.services.MqService;
-import citrus.services.SoapService;
+import citrus.services.*;
 import jakarta.jms.ConnectionFactory;
 import lombok.SneakyThrows;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.citrusframework.container.AfterSuite;
-import org.citrusframework.container.BeforeSuite;
-import org.citrusframework.container.SequenceAfterSuite;
-import org.citrusframework.container.SequenceBeforeSuite;
+import org.citrusframework.container.*;
 import org.citrusframework.context.TestContextFactory;
 import org.citrusframework.dsl.endpoint.CitrusEndpoints;
 import org.citrusframework.endpoint.EndpointAdapter;
@@ -32,15 +29,18 @@ import org.citrusframework.http.server.HttpServer;
 import org.citrusframework.jms.endpoint.JmsEndpoint;
 import org.citrusframework.json.JsonSchemaRepository;
 
+import org.citrusframework.selenium.endpoint.SeleniumBrowser;
 import org.citrusframework.spi.Resources;
 import org.citrusframework.variable.GlobalVariables;
 import org.citrusframework.ws.client.WebServiceClient;
 import org.citrusframework.ws.server.WebServiceServer;
 import org.citrusframework.xml.XsdSchemaRepository;
+import org.openqa.selenium.remote.Browser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.soap.SoapMessageFactory;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
@@ -53,14 +53,6 @@ import java.util.Map;
 @Configuration
 public class EndpointConfig {
 
-  @Bean
-  public GlobalVariables globalVariables() {
-    GlobalVariables variables = new GlobalVariables();
-    variables.getVariables().put("todoId", "702c4a4e-5c8a-4ce2-a451-4ed435d3604a");
-    variables.getVariables().put("todoName", "todo_1871");
-    variables.getVariables().put("todoDescription", "Description: todo_1871");
-    return variables;
-  }
 
   // MQ
   @Bean
@@ -94,10 +86,12 @@ public class EndpointConfig {
   }
 
   @Bean
-  public AfterSuite afterSuite(BasicDataSource todoListDataSource) {
+  @DependsOn("browser")
+  public AfterSuite afterSuite(BasicDataSource todoListDataSource, SeleniumBrowser browser) {
     return new SequenceAfterSuite.Builder()
         .actions(sql(todoListDataSource)
             .statement("DELETE FROM users"))
+        .actions(selenium().browser(browser).stop())
         .build();
   }
 
@@ -265,4 +259,32 @@ public class EndpointConfig {
     return new HttpService();
   }
 
+//  selenium
+@Bean
+public SeleniumBrowser browser() {
+  return CitrusEndpoints
+      .selenium()
+      .browser()
+      .type(Browser.CHROME.browserName())
+      .build();
+}
+
+//  @Bean
+//  @DependsOn("browser")
+//  public AfterSuite afterSuite(SeleniumBrowser browser) {
+//    return new SequenceAfterSuite.Builder()
+//        .actions(selenium().browser(browser).stop())
+//        .build();
+//  }
+
+  @Bean
+  public AfterTest afterTest() {
+    return new SequenceAfterTest.Builder()
+        .actions(sleep().milliseconds(500L))
+        .build();
+  }
+  @Bean
+  public SeleniumService seleniumService() {
+    return new SeleniumService();
+  }
 }

@@ -28,10 +28,20 @@
 #      | message                    | message_count |
 #      | __files/json/user-id1.json | 1             |
 
-  Структура сценария: DB helper
-    Если Вставить строку с данными пользователя "<user_data>"
-    Тогда Таблица содержит одну строк <row_count>
-    * Город пользователя в таблице "<user_city>"
+#  Структура сценария: DB helper
+#    Если Вставить строку с данными пользователя "<user_data>"
+#    Тогда Таблица содержит одну строк <row_count>
+#    * Город пользователя в таблице "<user_city>"
+#    Примеры:
+#      | user_data                  | row_count | user_city |
+#      | __files/json/user-id1.json | 1         | Moscow    |
+
+  Структура сценария: : Selenium helper
+    Пусть Открыт браузер Chrome
+    Если Открыть страницу "<url>"
+    Тогда Открыта страница с заголовком "<header>"
     Примеры:
-      | user_data                  | row_count | user_city |
-      | __files/json/user-id1.json | 1         | Moscow    |
+      | url              | header                                    |
+      | https://otus.ru/ | Авторские онлайн‑курсы для профессионалов |
+
+
