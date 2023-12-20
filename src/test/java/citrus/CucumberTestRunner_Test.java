@@ -21,5 +21,5 @@ import org.springframework.test.context.ContextConfiguration;
 @SelectClasspathResource("/cucumber")
 @CucumberContextConfiguration
 @ContextConfiguration(classes = CitrusSpringConfig.class)
-public class CucumberRunerTest {
+public class CucumberTestRunner_Test {
 }

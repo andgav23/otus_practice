@@ -15,6 +15,7 @@
         <webdriver.manager.version>5.5.3</webdriver.manager.version>
         <selenium.java.version>3.141.59</selenium.java.version>
         <junit.version>5.10.0</junit.version>
+        <junit.platform.cuite.version>1.10.1</junit.platform.cuite.version>
         <surefire.plugin.version>3.1.2</surefire.plugin.version>
         <base.url>https://otus.ru</base.url>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
@@ -29,6 +30,12 @@
         <slf4j.version>2.0.9</slf4j.version>
         <log4j2.version>2.21.0</log4j2.version>
         <commons.logging.version>1.2</commons.logging.version>
+        <commons.dbcp.version>1.4</commons.dbcp.version>
+        <h2.version>2.1.214</h2.version>
+        <hibernate.version>6.4.0.Final</hibernate.version>
+        <json.version>20231013</json.version>
+        <lombok.version>1.18.30</lombok.version>
+        <cucumber.version>7.14.0</cucumber.version>
     </properties>
 
     <dependencies>
@@ -49,12 +56,12 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20231013</version>
-        </dependency>
+        </dependency>        <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>${json.version}</version>
+    </dependency>
+
         <dependency>
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock</artifactId>
@@ -63,13 +70,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.6</version>
         </dependency>
         <!-- Spring Framework -->
         <dependency>
@@ -136,12 +138,6 @@
             <version>${citrus.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.consol.citrus</groupId>
-            <artifactId>citrus-jdbc</artifactId>
-            <version>3.4.0</version>
-
-        </dependency>
-        <dependency>
             <groupId>org.citrusframework</groupId>
             <artifactId>citrus-sql</artifactId>
             <version>${citrus.version}</version>
@@ -200,66 +196,38 @@
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
+            <version>${commons.dbcp.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.1.214</version>
+            <version>${h2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.4.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.2.224</version>
-        </dependency>
-<!--xml serialisation-->
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>4.0.4</version>
+            <version>${hibernate.version}</version>
         </dependency>
 <!--cucumber-->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit-platform-engine</artifactId>
-            <version>7.14.0</version>
+            <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-spring</artifactId>
-            <version>7.14.0</version>
+            <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite</artifactId>
-            <version>1.10.1</version>
+            <version>${junit.platform.cuite.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <base.url>https://otus.ru</base.url>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <base.url>https://test.otus.ru</base.url>
-            </properties>
-        </profile>
-
-    </profiles>
-
     <build>
         <plugins>
             <plugin>

@@ -4,7 +4,6 @@ package citrus.config;
 
 import static org.citrusframework.actions.ExecuteSQLAction.Builder.sql;
 import static org.citrusframework.actions.SleepAction.Builder.sleep;
-
 import static org.citrusframework.selenium.actions.SeleniumActionBuilder.selenium;
 import static org.example.utils.JsonBuilder.jsonFromFileToString;
 import static org.example.utils.XmlBuilder.xmlFromFile;
@@ -12,7 +11,6 @@ import citrus.services.*;
 import jakarta.jms.ConnectionFactory;
 import lombok.SneakyThrows;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
-
 import org.apache.commons.dbcp.BasicDataSource;
 import org.citrusframework.container.*;
 import org.citrusframework.context.TestContextFactory;
@@ -28,24 +26,20 @@ import org.citrusframework.http.message.HttpMessageHeaders;
 import org.citrusframework.http.server.HttpServer;
 import org.citrusframework.jms.endpoint.JmsEndpoint;
 import org.citrusframework.json.JsonSchemaRepository;
-
+import org.citrusframework.json.schema.SimpleJsonSchema;
 import org.citrusframework.selenium.endpoint.SeleniumBrowser;
 import org.citrusframework.spi.Resources;
-import org.citrusframework.variable.GlobalVariables;
 import org.citrusframework.ws.client.WebServiceClient;
 import org.citrusframework.ws.server.WebServiceServer;
 import org.citrusframework.xml.XsdSchemaRepository;
 import org.openqa.selenium.remote.Browser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.soap.SoapMessageFactory;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.xml.xsd.SimpleXsdSchema;
-import org.citrusframework.json.schema.SimpleJsonSchema;
 import java.util.HashMap;
 import java.util.Map;
 
