@@ -12,8 +12,6 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <webdriver.manager.version>5.5.3</webdriver.manager.version>
-        <selenium.java.version>3.141.59</selenium.java.version>
         <junit.version>5.10.0</junit.version>
         <surefire.plugin.version>3.1.2</surefire.plugin.version>
         <base.url>https://otus.ru</base.url>
@@ -25,16 +23,7 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>${webdriver.manager.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.java.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
@@ -48,6 +37,11 @@
             <version>${junit.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.simple.version}</version>
@@ -58,7 +52,21 @@
             <version>${assertj.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide-appium</artifactId>
+            <version>7.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>7.0.4</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.seleniumhq.selenium</groupId>-->
+<!--            <artifactId>selenium-remote-driver</artifactId>-->
+<!--            <version>4.16.1</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <profiles>
