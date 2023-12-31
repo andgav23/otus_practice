@@ -2,6 +2,7 @@ package org.example.pages;
 
 import static com.codeborne.selenide.Selenide.$;
 import com.codeborne.selenide.Condition;
+import org.example.components.AlertComponent;
 
 public class StartPage extends AbsBasePage<StartPage> {
 
@@ -15,12 +16,12 @@ public class StartPage extends AbsBasePage<StartPage> {
     return this;
   }
 
-  public MainPage clickSkipButton() {
+  public AlertComponent clickSkipButton() {
     $("[text='Skip >']").click();
-    return new MainPage();
+    return new AlertComponent();
   }
 
-  public boolean isStartPageOpened() {
+  public boolean isOpened() {
     return $("[text='Next']").has(Condition.visible);
   }
 }
