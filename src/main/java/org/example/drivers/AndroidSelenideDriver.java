@@ -23,7 +23,7 @@ public class AndroidSelenideDriver implements WebDriverProvider {
     options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
     options.setPlatformName("Android");
     options.setDeviceName("otus_device");
-    options.setPlatformVersion("9");
+    options.setPlatformVersion("7");
     options.setAppPackage("com.pyankoff.andy");
     options.setAppActivity(".MainActivity");
     try {

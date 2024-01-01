@@ -2,7 +2,7 @@ package org.example.services;
 
 import org.example.pages.StartPage;
 
-public class ChantPageService {
+public class StartPageService {
 
   public static void closeStartPage(StartPage startPage) {
     if (startPage.isOpened()) {

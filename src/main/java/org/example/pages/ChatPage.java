@@ -11,14 +11,17 @@ public class ChatPage extends AbsBasePage<ChatPage> {
     $(By.className("android.widget.EditText")).val(text);
     return this;
   }
+  public ChatPage editTextWidgetWithTextShouldBeEnable(String text) {
+    $(String.format("[text = '%s']", text)).should(Condition.enabled);
+    return this;
+  }
   public ChatPage clickSendButton() {
     $("[text='Send']").click();
     return this;
   }
 
   public ChatPage messagesListShouldBeContain(String message) {
-    $(String.format("[text='%s']", message)).should(Condition.disabled);
-//$(String.format("[text='%s']", message)).click();
+$(String.format("[text='%s%s']", message, " ")).should(Condition.visible);
     return this;
   }
 }
