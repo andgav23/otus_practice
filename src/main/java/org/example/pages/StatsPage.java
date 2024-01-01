@@ -1,8 +1,8 @@
 package org.example.pages;
 
-import com.codeborne.selenide.Condition;
-
 import static com.codeborne.selenide.Selenide.$;
+
+import com.codeborne.selenide.Condition;
 
 public class StatsPage extends AbsBasePage<StatsPage> {
 

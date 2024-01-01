@@ -20,6 +20,7 @@
         <maven.checkstyle.plugin.version>3.3.0</maven.checkstyle.plugin.version>
         <slf4j.simple.version>2.0.9</slf4j.simple.version>
         <assertj.version>3.24.2</assertj.version>
+        <selenide.version>7.0.4</selenide.version>
     </properties>
 
     <dependencies>
@@ -55,35 +56,14 @@
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide-appium</artifactId>
-            <version>7.0.4</version>
+            <version>${selenide.version}</version>
         </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
-            <version>7.0.4</version>
+            <version>${selenide.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.seleniumhq.selenium</groupId>-->
-<!--            <artifactId>selenium-remote-driver</artifactId>-->
-<!--            <version>4.16.1</version>-->
-<!--        </dependency>-->
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <base.url>https://otus.ru</base.url>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <base.url>https://test.otus.ru</base.url>
-            </properties>
-        </profile>
-
-    </profiles>
 
     <build>
         <plugins>

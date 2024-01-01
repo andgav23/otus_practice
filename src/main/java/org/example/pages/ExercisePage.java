@@ -1,9 +1,8 @@
 package org.example.pages;
 
-import com.codeborne.selenide.Condition;
-import org.openqa.selenium.By;
-
 import static com.codeborne.selenide.Selenide.$;
+
+import com.codeborne.selenide.Condition;
 
 public class ExercisePage extends AbsBasePage<ExercisePage> {
 

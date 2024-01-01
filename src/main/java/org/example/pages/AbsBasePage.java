@@ -8,4 +8,9 @@ public abstract class AbsBasePage<T> {
     Selenide.open();
     return (T) this;
   }
+
+  public T close() {
+    Selenide.closeWebDriver();
+    return (T) this;
+  }
 }

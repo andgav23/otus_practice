@@ -4,7 +4,6 @@ import com.codeborne.selenide.WebDriverProvider;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.AutomationName;
-import io.appium.java_client.remote.options.SupportsAutomationNameOption;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import javax.annotation.Nonnull;
@@ -23,7 +22,7 @@ public class AndroidSelenideDriver implements WebDriverProvider {
     options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
     options.setPlatformName("Android");
     options.setDeviceName("otus_device");
-    options.setPlatformVersion("7");
+    options.setPlatformVersion("9");
     options.setAppPackage("com.pyankoff.andy");
     options.setAppActivity(".MainActivity");
     try {
