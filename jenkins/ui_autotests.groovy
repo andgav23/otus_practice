@@ -1,4 +1,4 @@
-node('maven_otus') {
+node('maven') {
     timestamps {
         wrap([$class: 'BuildUser']) {
             currentBuild.description = "User: ${env.BUILD_USER}"
