@@ -4,7 +4,7 @@ node('maven_otus') {
             currentBuild.description = "User: ${env.BUILD_USER}"
         }
         params = readYaml text: env.YAML_CONFIG ?: '{}'
-        if (params !-null) {
+        if (params !=null) {
             for (key in params.ketSet()) {
                 value = params[key]
                 env.setProperty(key, value)
