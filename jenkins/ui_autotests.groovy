@@ -21,11 +21,11 @@ node('maven_otus') {
             }
         }
                 stage("tests stage") {
-                    final foundFiles = sh(script: 'ls /home/jenkins', returnStdout: true).split()
+                    final foundFiles = sh(script: 'ls /home/jenkins_home/workspace', returnStdout: true).split()
                     sh "echo 'Hello ${foundFiles}'"
 //                    sh "echo ${foundFiles}"
 
-                    sh "mvn - f /home/jenkins/workspace/pom.xml test"
+                    sh "mvn -f /home/jenkins_home/workspace/pom.xml test"
                 }
 //        stage("Checkout") {
 //            scm checkout
