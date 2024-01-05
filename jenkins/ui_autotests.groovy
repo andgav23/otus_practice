@@ -24,11 +24,9 @@ node('maven_otus') {
                     final foundFiles = findFiles(glob: '**/ui-autotests/*')
                     sh "echo 'Hello'"
                     sh "echo ${foundFiles}"
-                    foundFiles.each {
-                        println it
-                    sh "mvn test -Dbrowser=${env.BROWSER_NAME}"
-                        sh "echo ${foundFiles}"
-        }
+
+//                    sh "mvn test -Dbrowser=${env.BROWSER_NAME}"
+                }
 //        stage("Checkout") {
 //            scm checkout
 //        }
@@ -52,4 +50,4 @@ node('maven_otus') {
 //            )
 //        }
     }
-}}
+}
