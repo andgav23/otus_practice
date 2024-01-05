@@ -5,9 +5,12 @@ node('maven_otus') {
         }
         params = readYaml text: env.YAML_CONFIG ?: '{}'
         if (params !=null) {
-            for (key in params.ketSet()) {
-                value = params[key]
-                env.setProperty(key, value)
+//            for (key in params.ketSet()) {
+//                value = params[key]
+//                env.setProperty(key, value)
+//            }
+            for (entry in params) {
+                env.setProperty(entry.key, entry.value)
             }
         }
         stage("Checkout") {
