@@ -14,6 +14,7 @@ node('maven_otus') {
             }
         }
                 stage("tests stage") {
+                    sh "ls ./"
                     sh "mvn test -Dbrowser=${env.BROWSER_NAME}"
         }
 //        stage("Checkout") {
