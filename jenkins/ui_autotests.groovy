@@ -21,7 +21,7 @@ node('maven_otus') {
             }
         }
                 stage("tests stage") {
-                    final foundFiles = sh(script: 'ls /home/jenkins', returnStdout: true).split()
+                    final foundFiles = sh(script: 'ls /home/jenkins/agent', returnStdout: true).split()
                     sh "echo 'Hello ${foundFiles}'"
 //                    sh "echo ${foundFiles}"
 
