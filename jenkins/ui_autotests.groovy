@@ -21,7 +21,7 @@ node('maven_otus') {
             }
         }
                 stage("tests stage") {
-                    final foundFiles = sh(script: 'ls -1 ./', returnStdout: true).split()
+                    final foundFiles = sh(script: 'ls ./', returnStdout: true).split()
                     sh "echo 'Hello'"
                     sh "echo ${foundFiles}"
                     foundFiles.each {
