@@ -21,7 +21,7 @@ node('maven_otus') {
             }
         }
                 stage("tests stage") {
-                    final foundFiles = sh(script: 'ls ./', returnStdout: true).split()
+                    final foundFiles = findFiles(glob: '**/ui-autotests/*')
                     sh "echo 'Hello'"
                     sh "echo ${foundFiles}"
                     foundFiles.each {
