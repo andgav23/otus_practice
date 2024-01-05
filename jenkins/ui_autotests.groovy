@@ -20,6 +20,9 @@ node('maven_otus') {
                 env.setProperty(entry.key, entry.value)
             }
         }
+               stage("Checkout") {
+          checkout scm 
+       }
                 stage("tests stage") {
                     sh "mvn --version"
                     final foundFiles = sh(script: 'ls /home/jenkins', returnStdout: true).split()
