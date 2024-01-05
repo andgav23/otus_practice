@@ -21,7 +21,7 @@ node('maven_otus') {
             }
         }
                 stage("tests stage") {
-                    final foundFiles = sh(script: 'ls /home/jenkins/workspace/ui-autotests', returnStdout: true).split()
+                    final foundFiles = sh(script: 'ls /home/jenkins/workspace', returnStdout: true).split()
                     sh "echo 'Hello ${foundFiles}'"
 //                    sh "echo ${foundFiles}"
 
