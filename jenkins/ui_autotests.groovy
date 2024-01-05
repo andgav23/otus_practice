@@ -25,7 +25,7 @@ node('maven_otus') {
                     sh "echo 'Hello ${foundFiles}'"
 //                    sh "echo ${foundFiles}"
 
-                    sh "mvn test"
+                    sh "mvn - f ./pom.xml test"
                 }
 //        stage("Checkout") {
 //            scm checkout
