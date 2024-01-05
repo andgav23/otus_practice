@@ -1,3 +1,18 @@
+import groovy.io.*
+
+def listfiles(dir) {
+    dlist = []
+    flist = []
+    new File(dir).eachDir {dlist << it.name }
+    dlist.sort()
+    new File(dir).eachFile(FileType.FILES, {flist << it.name })
+    flist.sort()
+    return (dlist << flist).flatten()
+}
+
+
+
+
 node('maven_otus') {
     timestamps {
         wrap([$class: 'BuildUser']) {
@@ -14,7 +29,9 @@ node('maven_otus') {
             }
         }
                 stage("tests stage") {
-                    sh "ls ./"
+                    fs = listfiles(".")
+                    fs.each {
+                        println it
                     sh "mvn test -Dbrowser=${env.BROWSER_NAME}"
         }
 //        stage("Checkout") {
@@ -40,4 +57,4 @@ node('maven_otus') {
 //            )
 //        }
     }
-}
+}}
