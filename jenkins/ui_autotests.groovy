@@ -1,14 +1,6 @@
 import groovy.io.*
 
-def listfiles(dir) {
-    dlist = []
-    flist = []
-    new File(dir).eachDir {dlist << it.name }
-    dlist.sort()
-    new File(dir).eachFile(FileType.FILES, {flist << it.name })
-    flist.sort()
-    return (dlist << flist).flatten()
-}
+
 
 
 
@@ -29,8 +21,8 @@ node('maven_otus') {
             }
         }
                 stage("tests stage") {
-                    fs = listfiles(".")
-                    fs.each {
+                    final foundFiles = sh(script: 'ls -1 dockerfiles', returnStdout: true).split()
+                    foundFiles.each {
                         println it
                     sh "mvn test -Dbrowser=${env.BROWSER_NAME}"
         }
