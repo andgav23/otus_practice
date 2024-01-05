@@ -25,6 +25,7 @@ node('maven_otus') {
                     foundFiles.each {
                         println it
                     sh "mvn test -Dbrowser=${env.BROWSER_NAME}"
+                        sh "echo ${foundFiles}"
         }
 //        stage("Checkout") {
 //            scm checkout
