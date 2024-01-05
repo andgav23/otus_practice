@@ -22,6 +22,8 @@ node('maven_otus') {
         }
                 stage("tests stage") {
                     final foundFiles = sh(script: 'ls -1 ./', returnStdout: true).split()
+                    sh "echo 'Hello'"
+                    sh "echo ${foundFiles}"
                     foundFiles.each {
                         println it
                     sh "mvn test -Dbrowser=${env.BROWSER_NAME}"
