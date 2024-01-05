@@ -13,9 +13,9 @@ node('maven_otus') {
                 env.setProperty(entry.key, entry.value)
             }
         }
-        stage("Checkout") {
-            scm checkout
-        }
+//        stage("Checkout") {
+//            scm checkout
+//        }
         stage("Running UI tests") {
             if (env.BROWSER_NAME == "") {
                 echo "BROWSER_NAME parameter is required"
