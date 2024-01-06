@@ -6,6 +6,7 @@ node('maven_otus') {
 
         stage("Hello stage") {
             echo "Hello from stage"
+            echo "Branches: ${env.BRANCHES}"
         }
 
     }
