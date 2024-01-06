@@ -23,13 +23,14 @@ node('maven_otus') {
                stage("Checkout") {
           checkout scm 
        }
-                stage("tests stage") {
-                    sh "mvn --version"
-                    final foundFiles = sh(script: 'ls /home/jenkins', returnStdout: true).split()
-                    sh "echo 'Hello ${foundFiles}'"
-//                    sh "echo ${foundFiles}"
+                stage("tests master") {
+                    when
+                            {
+                                branch 'master'
+                            }
+                    sh "echo 'Hello from master'"
 
-                    sh "mvn test"
+
                 }
 //        stage("Checkout") {
 //            scm checkout
