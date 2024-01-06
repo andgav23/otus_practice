@@ -24,11 +24,7 @@ node('maven_otus') {
           checkout scm 
        }
                 stage("tests master") {
-                    when
-                            {
-                                branch 'master'
-                            }
-                    sh "echo 'Hello from master'"
+                    sh "echo 'Hello ${env.BROWSER_NAME}'"
 
 
                 }
