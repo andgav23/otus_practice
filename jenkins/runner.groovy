@@ -4,7 +4,7 @@ pipeline {
         stage('build job-a') {
             steps {
 //                build job: 'job-a', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_ONE', value: "two"]]
-                    for (entry in env.BRANCHES) {
+                    for (x in 1..5) {
                         echo "Branch for running: ${env.BRANCHES}"
                 }
 
