@@ -1,12 +1,10 @@
-node('maven_otus') {
-    timestamps {
-        wrap([$class: 'BuildUser']) {
-            currentBuild.description = "User: ${env.BUILD_USER}"
-        }
-
-        stage("Hello stage") {
-            echo "Hello from stage"
-            echo "Branches: ${env.BRANCHES}"
+pipeline {
+    agent any
+    stages {
+        stage('build job-a') {
+            steps {
+                build job: 'job-a', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_ONE', value: "two"]]
+            }
         }
 
     }

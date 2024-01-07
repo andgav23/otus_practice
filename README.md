@@ -1,3 +1,1 @@
-# Запуск тестов
-ветка master, команда:
-mvn clean test
+# Ветка инициализации jenkins-jobs
