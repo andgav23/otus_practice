@@ -5,7 +5,7 @@ pipeline {
             steps {
 //                build job: 'job-a', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_ONE', value: "two"]]
 
-                    echo "Branch for running: ${branch}"
+                    echo "Branch for running: ${env.BRANCHES}"
 
             }
         }
